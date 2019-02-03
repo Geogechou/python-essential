@@ -1,0 +1,8 @@
+In python you can 列表
+In python you can 元祖
+In python you can 字典
+In python you can 函数
+In python you can 类
+In python you can 模块
+In python you can 文件
+In python you can 基本语法
