@@ -1,7 +1,5 @@
 """
-
 图片转bmp灰度图
-
 """
 import cv2
 imgpath = r"C:\Users\geoge\Desktop\2.bmp"
