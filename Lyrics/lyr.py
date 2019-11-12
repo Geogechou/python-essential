@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#encoding: utf-8
 import dbus
 import requests
 import json
@@ -7,8 +7,7 @@ from show import match_time,refresh_console
 last_token = " "
 start_time = time.time()
 global_lyrics = ""
-# 传入lyrics和时间
-# def display(text,sec):
+
 
 def refresh():
     session = dbus.SessionBus()
@@ -19,7 +18,7 @@ def refresh():
     artist = metadata['xesam:artist'][0]
     imageUrl = metadata['mpris:artUrl']
     global start_time
-    # 获取一个秒级别的时间戳
+    #获取一个秒级别的时间戳
     global global_lyrics
     '''
     if global_lyrics != "":
@@ -31,17 +30,11 @@ def refresh():
         if global_lyrics != "":
             refresh_console(time.time()-start_time)
         return
-    match_time(global_lyrics, time.time()-start_time)
-    last_token = title+artist+imageUrl
-    start_time = time.time()
-    print(artist, "-", title)
-    # print(artist)
-    # print(metadata)
-
     NEmusic_url = 'http://localhost:3000/search?keywords='+artist+" "+title
     res = requests.get(NEmusic_url)
     text = res.text
     jr = json.loads(text)
+    last_token = title+artist+imageUrl
     try:
         song_id = jr['result']['songs'][0]['id']
         print("song id=", song_id)
@@ -50,7 +43,11 @@ def refresh():
         lyricsJson = json.loads(lyricsRes.text)
         # global global_lyrics
         global_lyrics = lyricsJson['lrc']['lyric']
-        # print(global_lyrics)
+        match_time(global_lyrics, 0)
+        # last_token = title+artist+imageUrl
+        start_time = time.time()
+        print(artist, "-", title)
+        # print(artist)
     except Exception as e:
         print("网易云获取song失败", title, e)
         global_lyrics = ""
