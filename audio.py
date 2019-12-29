@@ -10,10 +10,13 @@ else:
     while i < len(sys.argv):
         word += sys.argv[i]+" "
         i += 1
-print("the word is=", word)
+print("the word is: ", word)
 url = 'https://fanyi.baidu.com/gettts?lan=uk&text='+word+'&spd=3&source=web'
-res = requests.get(url)
+session = requests.Session()
+# 绕过系统代理
+session.trust_env = False
+res = session.get(url)
 body = res.content
-with open('tmp.mp3', 'wb') as file_obj:
+with open('/tmp/audio.mp3', 'wb') as file_obj:
     file_obj.write(body)
-playsound('tmp.mp3')
+playsound('/tmp/audio.mp3')
